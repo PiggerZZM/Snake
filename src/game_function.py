@@ -1,9 +1,9 @@
 import pygame
 import sys
+import logging
 
 
 def check_events(play_button, stats, snake):
-
     for event in pygame.event.get():
         # 退出
         if event.type == pygame.QUIT:
@@ -63,3 +63,33 @@ def start_game(stats):
 
     # 隐藏光标
     pygame.mouse.set_visible(False)
+
+
+def check_snake_wall(snake, food, wall, stats, settings):
+    if pygame.sprite.spritecollideany(snake.head, wall.blocks):
+        game_over(snake, food, stats, settings)
+        logging.info('撞墙了')
+
+
+def check_snake_snake(snake, food, stats, settings):
+    for block in snake.blocks:
+        if block is not snake.head and (snake.head.pos_x, snake.head.pos_y) == (block.pos_x, block.pos_y):
+            game_over(snake, food, stats, settings)
+            logging.info('撞身体了')
+            break
+
+
+def game_over(snake, food, stats, settings):
+    stats.game_active = False
+    snake.regenerate()
+    food.regenerate(settings)
+
+
+def eat_food(snake, food, settings):
+    if (snake.head.pos_x, snake.head.pos_y) == (food.pos_x, food.pos_y):
+        logging.info("吃食物了")
+        food.regenerate(settings)
+        return True
+    else:
+        return False
+

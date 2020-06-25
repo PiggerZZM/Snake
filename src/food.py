@@ -20,3 +20,11 @@ class Food(Sprite):
 
     def blit_me(self, screen):
         screen.fill(self.color, self.rect)
+
+    def regenerate(self, settings):
+        self.pos_x = randint(self.height, settings.screen_height - self.height) // 10 * 10
+        self.pos_y = randint(self.width, settings.screen_width - self.width) // 10 * 10
+
+        self.rect = pygame.Rect(0, 0, self.width, self.height)
+        self.rect.top = self.pos_x
+        self.rect.left = self.pos_y

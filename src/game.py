@@ -2,6 +2,7 @@ import pygame
 import logging
 
 from src.food import Food
+from src.game_function import check_snake_wall, check_snake_snake
 from src.game_stats import GameStats
 from src.settings import Settings
 from src import game_function as gf
@@ -56,9 +57,13 @@ def run_game():
         # 监听事件
         gf.check_events(play_button, stats, snake)
 
-        # 更新蛇身
         if stats.game_active:
-            snake.update()
+            # 更新蛇身
+            snake.update(food, settings)
+            # 检查蛇头与墙壁碰撞
+            check_snake_wall(snake, food, wall, stats, settings)
+            # 检查蛇头与蛇身碰撞
+            check_snake_snake(snake, food, stats, settings)
 
         # 重绘屏幕
         gf.update_screen(screen, settings, play_button, stats, snake, wall, food)
