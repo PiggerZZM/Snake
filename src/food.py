@@ -11,8 +11,8 @@ class Food(Sprite):
         self.height = 10
         self.color = (0, 255, 255)
 
-        self.pos_x = randint(self.height, settings.screen_height - self.height)
-        self.pos_y = randint(self.width, settings.screen_width - self.width)
+        self.pos_x = randint(self.height, settings.screen_height - self.height) // 10 * 10
+        self.pos_y = randint(self.width, settings.screen_width - self.width) // 10 * 10
 
         self.rect = pygame.Rect(0, 0, self.width, self.height)
         self.rect.top = self.pos_x
